@@ -1,4 +1,4 @@
-# Blog
+# Interiorshop
 A Simple E-Commerce app made with Django
 
 
