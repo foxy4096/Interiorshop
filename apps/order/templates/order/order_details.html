@@ -1,0 +1,58 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <!-- A order page in bulma -->
+    <div class="container">
+        <div class="columns">
+            <div class="column is-one-quarter">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="content">
+                            <p>
+                                <strong>Order ID:</strong> {{ order.id }}
+                            </p>
+                            <p>
+                                <strong>Order Date:</strong> {{ order.created_at }}
+                            </p>
+                            <p>
+                                <strong>Order Total:</strong> {{ order.paid_amount }}
+                            </p>
+                            <p>
+                                <Strong>Status:</Strong> {{ order.status }}
+                            </p>
+                            <p>
+                                <Strong>Placed By:</Strong> {{ order.firstname }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="content">
+                            <p>
+                                <strong>Order Details:</strong>
+                            </p>
+                            <table class="table is-fullwidth">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for product in items %}
+                                        <tr>
+                                            <td><img src="{{product.product.get_thumbnail}}" alt="{{ product.product.name }}"></td>
+                                            <td><a href="{% url 'product' product.product.category product.product.slug %}">{{ product.product.name }}</a></td>
+                                            <td>{{ product.quantity }}</td>
+                                            <td>{{ product.price }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+{% endblock content %}
+    

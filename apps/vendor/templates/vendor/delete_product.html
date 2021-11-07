@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+    <h1 class="title">Delete Product</h1>
+    <h3 class="title is-4">Are you sure you want to delete this product?</h3>
+
+    <div class="columns">
+        <div class="column is-one-third">
+            <div class="card">
+                <div class="card-image">
+                    <figure class="image is-4by3">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4">{{ product.name }}</p>
+                            <p class="subtitle is-6">{{ product.description }}</p>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <p>
+                            <strong>Price:</strong> {{ product.price }}
+                        </p>
+                        <p>
+                            <strong>Category:</strong> {{ product.category }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-one-third">
+            <form action="." method="POST">
+                {% csrf_token %}
+                <div class="field">
+                    <div class="control">
+                        <button type="submit" class="button is-danger">Delete</button>
+                        <a href="{% url 'vendor_dashboard' %}" class="button is-primary">Go Back To Dashboard</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

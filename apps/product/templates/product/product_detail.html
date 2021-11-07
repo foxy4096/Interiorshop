@@ -1,0 +1,73 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<!-- Product Detail in bulma-->
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-one-quarter">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        </figure>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="columns">
+                    <div class="column">
+                        <h1 class="title">{{ product.name }}</h1>
+                        <h2 class="subtitle">{{ product.price }}</h2>
+                        <h3 class="is-link"><a href="{% url 'category' product.category.slug %}">{{product.category}}</a></h3>
+                        <p>{{ product.description }}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="columns">
+                    <div class="column">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <div class="field has-addons">
+                                <div class="control">
+                                    <input class="input" type="number" name="quantity" value="1" min="1" max="{{ product.quantity }}">
+                                </div>
+                                <button class="button is-link" type="submit">Add to cart</button>
+                            </div>
+                            <br>
+                        </form>
+                        <a class="button is-primary is-outlined" href="">
+                            <span class="icon">
+                                <i class="fa fa-shopping-cart"></i>
+                            </span>
+                            <span>Buy Now</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <hr>
+    {% if similars %}
+    <!-- similar products -->
+    <div class="container">
+        <div class="columns">
+            <div class="column">
+                <h1 class="title">Similar Products</h1>
+            </div>
+        </div>
+        <div class="columns">
+            {% for product in similars %}
+            {% include 'product/part/product_block.html' %}
+            {% endfor %}
+        </div>
+    {% endif %}
+        
+    
+    {% endblock content %}

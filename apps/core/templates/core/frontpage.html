@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+    {% if newest_products %}
+    <div class="columns is-multiline mb-6">
+        <div class="column is-12 has-text-centered mt-6 mb-6">
+            <h2 class="is-size-3">Newest Products</h2>
+        </div>
+    </div>
+    
+    <!-- Nice Product List with buttons -->
+    <div class="columns is-multiline">
+        {% for product in newest_products %}
+        {% include 'product/part/product_block.html' %}
+        {% endfor %}
+    {% else %}
+    <div class="columns is-multiline mb-6">
+        <div class="column is-12 has-text-centered mt-6 mb-6">
+            <h2 class="is-size-3">Sorry No Products Are Available</h2>
+        </div>
+    </div> 
+    {% endif %}
+        
+{% endblock content %}
+    

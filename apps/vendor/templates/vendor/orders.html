@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <!-- Vendor Orders dashboard in bulma -->
+    <div class="container">
+        <div class="columns">
+            <div class="column">
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            <span class="icon">
+                                <i class="fa fa-shopping-cart"></i>
+                            </span>
+                            <span>Orders</span>
+                        </p>
+                    </header>
+                    <div class="card-content">
+                        <div class="content">
+                            <table class="table is-fullwidth is-striped is-hoverable">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in orders %}
+                                        <tr>
+                                            <td>{{ order.id }}</td>
+                                            <td>{{ order.firstname }} {{order.lastname}}</td>
+                                            <td>${{ order.paid_amount }}</td>
+                                            <td>{{ order.status }}</td>
+                                            <td>
+                                                <a href="{% url 'vendor_order_edit' order.id %}" class="button is-primary">Edit</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+    

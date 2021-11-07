@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <h1 class="title">Edit Order no. {{order.id}}</h1>
+    <hr>
+    <form action="." method="POST">
+        {% csrf_token %}
+        Name: {{order.firstname}} {{order.lastname}}
+        <br>
+        Email: {{order.email}}
+        <br>
+        Address: {{order.address}}
+        <br>
+        City: {{order.city}}
+        <br>
+        State: {{order.state}}
+        <br>
+        Country: {{order.country}}
+        <br>
+        Amount: <b>$</b> {{order.paid_amount}}
+        {{form.as_p}}
+        <br>
+        <button type="submit" class="button is-primary">Save</button>
+    </form>
+    <hr>
+    <h2 class="title is-4">Items in the order</h2>
+    {% for item in items %}
+        <h1><a href="{% url 'product' item.product.category.slug item.product.slug %}" class="is-link">{{item.product.name}}</a> - {{item.quantity}} </h1>
+    {% endfor %}
+        
+{% endblock content %}
+    

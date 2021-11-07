@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bulma.css' %}">
+    {% if title %}
+    <title>{{title}} | InteriorShop</title>
+    {% else %}
+    <title>InteriorShop</title>
+    {% endif %}
+</head>
+
+<body>
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <strong>InteriorShop</strong>
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+              </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <div class="navbar-item">
+                <form action="{% url 'search' %}" method="GET">
+                    <div class="field has-addons">
+                        <div class="control">
+                            <input type="text" name="q" class="input" placeholder="Search...">
+                        </div>
+                        <div class="control">
+                            <button type="submit" class="button is-dark is-uppercase">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            </div>
+            <div class="navbar-end">    
+                {% for category in categories %}
+                    <a class="navbar-item" href="{% url 'category' category.slug %}">
+                        {{category.name}}
+                    </a>
+                {% endfor %}
+                <a href="{% url 'contact' %}" class="navbar-item">Contact</a>
+                <div class="navbar-item">
+                    <!-- cart button with no of items in it-->
+                    <a href="{% url 'cart' %}" class="button is-dark is-uppercase">
+                        <span class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </span>
+                        <span>Cart</span>
+                        
+                        {% if cart %}
+                        <span class="tag is-dark">{{cart | length}}</span>
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% if messages %}
+
+    {% for message in messages %}
+    <article class="message is-{{message.tags}}">
+        <div class="message-body">
+            {{message}}
+        </div>
+    </article>
+    {% endfor %}
+    {% endif %}
+    <section class="section">
+        <div class="container">
+
+            {% block content %}
+
+            {% endblock content %}
+
+        </div>
+    </section>
+    <footer class="footer">
+        <h3 class="is-size-4 mb-4">InteriorShop</h3>
+
+        {% if user.is_authenticated %}
+        <a href="{% url 'vendor_dashboard' %}">Vendor Dashboard</a>
+        {% else %}
+        <a href="{% url 'become_vendor' %}">Become vendor</a>
+        {% endif %}
+
+    </footer>
+</body>
+
+{% block scripts %}
+    
+{% endblock scripts %}
+    
+<script src="{% static 'scripts/main.js' %}"></script>
+
+</html>

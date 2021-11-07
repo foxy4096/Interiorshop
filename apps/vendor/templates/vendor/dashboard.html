@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+<div class="box">
+    <h1 class="title">Vendor Dashboard - {{vendor.name}}</h1>
+    <a href="{% url 'vendor_orders' %}" class="button is-success">Orders</a>
+    <a href="{% url 'logout' %}" class="button is-danger is-uppercase">Logout</a>
+</div>
+
+<div class="box">
+    <h2 class="is-size-3 mb-4">My Products</h2>
+    
+    <a href="{% url 'add_product' %}" class="button is-info is-uppercase mb-6">Add Product</a>
+
+    {% if products %}
+    <table class="table is-fullwidth">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td><img src="{{product.image.url}}" alt="{{product.name}}" width="100"></td>
+                <td><a href="{% url 'product' product.category.slug product.slug %}">{{product.name}}</a></td>
+                <td>{{product.price}}</td>
+                <td>{{product.quantity}}</td>
+                <td>
+                    <a href="{% url 'edit_product' product.slug %}" class="button is-info is-uppercase mr-2">Edit</a>
+                    <a href="{% url 'delete_product' product.slug %}" class="button is-danger is-uppercase">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>You have no products.</p>
+    {% endif %}
+        
+</div>
+{% endblock content %}

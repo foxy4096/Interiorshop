@@ -1,0 +1,23 @@
+<div class="column is-one-third">
+    <div class="card">
+        <div class="card-image">
+            <figure class="image is-4by3">
+                <img src="{{ product.get_thumbnail }}" alt="{{ product.name }}">
+            </figure>
+        </div>
+        <div class="card-content">
+            <div class="media">
+                <div class="media-content">
+                    <p class="title is-4">{{ product.name }}</p>
+                    <p class="subtitle is-6">{{ product.price }}</p>
+                </div>
+            </div>
+            <div class="content">
+                {{ product.description| truncatechars:50 }}
+            </div>
+        </div>
+        <footer class="card-footer">
+            <a href="{% url 'product' product.category.slug product.slug %}" class="card-footer-item">View</a>
+        </footer>
+    </div>
+</div>

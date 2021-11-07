@@ -1,0 +1,81 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+<!-- Cart detail page in bulma -->
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-6">
+                <h1 class="title">Cart</h1>
+
+                {% if cart %}
+
+
+
+                <table class="table is-fullwidth is-striped is-hoverable">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Remove?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart %}
+                        <tr>
+                            <td>
+                                <figure class="image is-64x64">
+                                    <img src="{{ item.product.get_thumbnail }}" alt="{{ item.product.name }}">
+                                </figure>
+                            </td>
+                            <td><a href="{% url 'product' item.product.category.slug item.product.slug %}">
+                                    {{ item.product.name }}</a>
+                            </td>
+                            <td>
+                                <a href="?change_quantity={{item.product.id}}&quantity=-1">-</a>
+                                {{item.quantity}}
+                                <a href="?change_quantity={{item.product.id}}&quantity=1">+</a>
+                            </td>
+                            <td>${{ item.product.price }}</td>
+                            <td><a href="?remove_from_cart={{item.product.id}}" class="delete">Remove</a></td>
+                        </tr>
+
+                        {% endfor %}
+                        <tr>
+                            <td colspan="3" class="has-text-right">Total:</td>
+                            <td>{{ cart | length }}</td>
+                            <td colspan="2">${{ cart.get_total_price }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="column is-6">
+                <div class="box">
+                    <h2 class="subtitle">Contact information</h2>
+
+                    <form method="post" action="." id="payment-form">
+                        {% csrf_token %}
+
+                        <div class="columns">
+                            <div class="column">
+                                {{form.as_p}}
+                            </div>
+                        </div>
+                        <h2 class="subtitle">We only process orders Cash on delivery</h2>
+                        <div class="field">
+                            <div class="control">
+                                <button class="button is-dark mt-4 is-uppercase">Checkout</button>
+                            </div>
+                        </div>
+                </div>
+                {% else %}
+                <p>You don't have any products in your cart!</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
