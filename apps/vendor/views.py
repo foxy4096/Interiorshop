@@ -25,7 +25,7 @@ def become_vendor(request):
 
 @login_required
 def vendor_dashboard(request):
-    vendor = request.user.vendor
+    vendor = Vendor.objects.get_or_create(created_by=request.user)[0]
     products = vendor.products.all()
     return render(request, 'vendor/dashboard.html', {'vendor': vendor, 'products': products, 'title': 'Vendor Dashboard'})
 
